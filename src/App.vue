@@ -16,9 +16,8 @@
     components: {
       'app-header': Header
     },
-    data () {
-      return {
-      }
+    created(){
+      this.$store.dispatch('initStocks');
     }
   }
 </script>
