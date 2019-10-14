@@ -38,10 +38,13 @@ export default {
                 stockId: this.stock.id,
                 stockPrice: this.stock.price,
                 quantity: this.quantity
-            };
-            console.log(order);
+            }
+            this.$store.dispatch('buyStock', order);
             this.quantity = 0;
         }
+    },
+    created(){
+        console.log(this.stock.id)
     }
 }
 </script>

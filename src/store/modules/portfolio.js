@@ -1,10 +1,13 @@
+//import stocks from '../../data/stocks';
+
 const state = {
     funds: 10000,
     stocks: []
 };
 
 const mutations = {
-    'BUY_STOCK'(state,{ stockId, quantity, stockPrice }) {
+    'BUY_STOCK'(state,{ stockId, stockPrice, quantity }) {
+        //state.stocks = stocks;
         const record = state.stocks.find(element => element.id === stockId);
         if(record) {
             record.quantity += quantity;
