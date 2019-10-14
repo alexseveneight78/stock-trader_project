@@ -13,12 +13,14 @@
                         type="number" 
                         placholder="Quantity"
                         v-model="quantity"
+                        :class="{ danger: insufficientFunds}"
                         >
                 </div>
                 <button 
                     @click="buyStock"
-                    :disabled="quantity <= 0"
-                    >Buy</button>
+                    :disabled=" insufficientFunds || quantity <= 0"
+                    >{{ insufficientFunds ? 'InsufficientFunds' : 'Buy' }}
+                    </button>
             </div>
         </div>
     </div>
@@ -32,6 +34,14 @@ export default {
             quantity: 0
         }
     },
+    computed: {
+        funds(){
+            return this.$store.getters.funds;
+        },
+        insufficientFunds(){
+            return this.quantity * this.stock.price > this.funds;
+        }
+    },
     methods: {
         buyStock(){
             const order = {
@@ -39,7 +49,7 @@ export default {
                 stockPrice: this.stock.price,
                 quantity: this.quantity
             };
-            console.log(order);
+            this.$store.dispatch('buyStock', order)
             this.quantity = 0;
         }
     }
@@ -47,5 +57,8 @@ export default {
 </script>
 
 <style scoped>
-
+    .danger {
+        background-color: red;
+        transition: 500ms;
+    }
 </style>
